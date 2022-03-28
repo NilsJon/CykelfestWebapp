@@ -1,25 +1,57 @@
-.App {
-    text-align: center;
+.app {
+    display: grid;
+    place-items: center;
+    background-image: url(./images/bikes.png);
+    background-repeat: no-repeat, repeat;
+    height: 100vh;
 }
 
-.App-logo {
-    height: 40vmin;
-    pointer-events: none;
+.appBody {
+    margin-top: -20px;
+    height: 80vh;
+    background-color: #ededed;
+    width: 80vw;
+    box-shadow: -1px 4px 20px -6px rgba(0, 0, 0, 0.75);
+    flex-direction: column;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-        animation: App-logo-spin infinite 20s linear;
-    }
+.container {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
 }
 
-.App-header {
-    background-color: #282c34;
-    min-height: 100vh;
+.cykelForm {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+    justify-content: space-around;
+    width: 40%;
+    height: 40%;
+}
+
+.downloadButtons {
+    margin: 5px;
+}
+
+.sidebar__headerRight > .MuiSvgIcon-root {
+    margin-right: 2vw;
+    font-size: 24px !important;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+h2 {
+    height: min-content;
 }

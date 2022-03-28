@@ -10,7 +10,7 @@ const Generator = (data) => {
 
     // #Hur många grupper som bara kommer besöka hem inom en stadszon under cykelfesten.
     // #Högre siffra innebär enklare att hitta lösning.
-    let ALLOWED_ONE_ZONERS = 2;
+    let ALLOWED_ONE_ZONERS = Math.floor(data.length / 30);
 
     const getMealMatch = () => {
         let matches_dic = new Map();
@@ -28,6 +28,7 @@ const Generator = (data) => {
             const couple1 = _.sample(Array.from(leftOverGroups));
             leftOverGroups.delete(couple1);
             const couple2 = _.sample(Array.from(leftOverGroups));
+            leftOverGroups.delete(couple2);
             meal_matches.set(host, [couple1, couple2]);
             previouslyMatchedWith.get(host).concat([couple1, couple2]);
             previouslyMatchedWith.get(couple1).concat([host, couple2]);
@@ -38,6 +39,7 @@ const Generator = (data) => {
             visitedZones.get(couple2).push(zone);
             matches_dic.set(host, [couple1, couple2]);
         }
+        console.log(leftOverGroups);
         return matches_dic;
     };
 
@@ -161,7 +163,8 @@ const Generator = (data) => {
         }
         return result;
     };
-
+    console.log("Starting generating");
+    console.log(ALLOWED_ONE_ZONERS);
     createGroups(data);
     all_groups = new Map(groups);
     previouslyMatchedWith = generateMap();
@@ -182,7 +185,7 @@ const Generator = (data) => {
         let maincourse_matches = getMealMatch();
         let dessert_matches = getMealMatch();
         if (checkDuplicates() && checkZones()) {
-            //console.log(groups);
+            console.log("Found match");
             let app_keys = Array.from(appetizer_matches.keys());
             let main_keys = Array.from(maincourse_matches.keys());
             let des_keys = Array.from(dessert_matches.keys());
@@ -192,6 +195,7 @@ const Generator = (data) => {
                 dessert_matches.get(_.sample(des_keys)).push(leftover);
             });
             console.log("found matches");
+            console.log(appetizer_matches);
             const csv_app = createCSVData(appetizer_matches);
             const csv_main = createCSVData(maincourse_matches);
             const csv_des = createCSVData(dessert_matches);
