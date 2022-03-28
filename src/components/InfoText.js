@@ -4,6 +4,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { CSVLink } from "react-csv";
+import { exampleData } from "./ExampleData.js";
 
 export default function InfoText() {
     const [open, setOpen] = React.useState(false);
@@ -70,6 +72,21 @@ export default function InfoText() {
                     </a>
                     <br />
                     <br />
+                    <DialogContentText
+                        id="scroll-dialog-description"
+                        ref={descriptionElementRef}
+                        tabIndex={-1}
+                    >
+                        Här kan du ladda ner en fil med exempel data man kan
+                        använda som input:
+                    </DialogContentText>
+                    <CSVLink
+                        data={exampleData}
+                        filename={"input.csv"}
+                        className="downloadButtons"
+                    >
+                        Example CSV file
+                    </CSVLink>
                     <DialogContentText>
                         Kan vara värt att nämna att algoritmen sätter tre
                         grupper ihop för varje måltid. Så en grupp hostar två

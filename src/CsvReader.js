@@ -27,6 +27,8 @@ export default function CsvReader() {
                 result.push(split);
             }
         }
+        console.log(headers);
+        console.log(result);
         setFileContents(result);
         setIsFile(true);
     };
