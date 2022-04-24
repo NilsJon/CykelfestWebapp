@@ -39,7 +39,6 @@ const Generator = (data) => {
             visitedZones.get(couple2).push(zone);
             matches_dic.set(host, [couple1, couple2]);
         }
-        console.log(leftOverGroups);
         return matches_dic;
     };
 
@@ -87,6 +86,7 @@ const Generator = (data) => {
     const createGroups = (csv_data) => {
         for (let i = 0; i < csv_data.length; i++) {
             let row = csv_data[i];
+            row[7] = row[7].replace(/"/g, "");
             let group_name = row[1] + " & " + row[3];
             if (row[5] === "2") {
                 row.splice(5, 0, "");
@@ -163,8 +163,8 @@ const Generator = (data) => {
         }
         return result;
     };
+
     console.log("Starting generating");
-    console.log(ALLOWED_ONE_ZONERS);
     createGroups(data);
     all_groups = new Map(groups);
     previouslyMatchedWith = generateMap();
@@ -194,8 +194,6 @@ const Generator = (data) => {
                 maincourse_matches.get(_.sample(main_keys)).push(leftover);
                 dessert_matches.get(_.sample(des_keys)).push(leftover);
             });
-            console.log("found matches");
-            console.log(appetizer_matches);
             const csv_app = createCSVData(appetizer_matches);
             const csv_main = createCSVData(maincourse_matches);
             const csv_des = createCSVData(dessert_matches);

@@ -5,6 +5,8 @@ import Button from "@mui/material/Button";
 import "./App.css";
 import { CircularProgress } from "@mui/material";
 import InfoText from "./components/InfoText.js";
+import papaparse from "papaparse";
+import { result } from "underscore";
 
 export default function CsvReader() {
     const [csvFile, setCsvFile] = useState();
@@ -18,17 +20,20 @@ export default function CsvReader() {
     }, [isFile]);
 
     const processCSV = (str, delim = ",") => {
-        const headers = str.slice(0, str.indexOf("\n")).split(delim);
-        const rows = str.slice(str.indexOf("\n") + 1).split("\n");
-        let result = [];
-        for (var i = 0; i < rows.length; i++) {
-            let split = rows[i].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
-            if (split != null) {
-                result.push(split);
-            }
-        }
-        console.log(headers);
+        const parsedString = papaparse.parse(str);
+        let result = parsedString.data;
+        result.shift();
+        result = result.filter((entry) => entry.length === result[0].length);
         console.log(result);
+        // const headers = str.slice(0, str.indexOf("\n")).split(delim);
+        // const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+        // let result = [];
+        // for (var i = 0; i < rows.length; i++) {
+        //     let split = rows[i].match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+        //     if (split != null) {
+        //         result.push(split);
+        //     }
+        // }
         setFileContents(result);
         setIsFile(true);
     };
@@ -70,6 +75,7 @@ export default function CsvReader() {
                             onChange={(e) => {
                                 console.log("setting stuff");
                                 setCsvFile(e.target.files[0]);
+                                setIsSubmitted(false);
                             }}
                         />
                         Ladda upp
